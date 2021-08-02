@@ -1,5 +1,5 @@
 CC=clang++
-CXXFLAGS=-g -Wall -O2
+CXXFLAGS=-Wall -O2
 
 all: BigInt
 
