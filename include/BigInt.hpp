@@ -10,7 +10,6 @@ class BigInt{
     std::vector<int> numbs;
     bool isPositive;
     int base;
-    unsigned int skip;
     static const int bdefault = 1000 * 1000 * 1000;
 public:
     //Constructor

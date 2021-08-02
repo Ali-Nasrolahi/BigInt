@@ -1,11 +1,11 @@
 #include "../include/BigInt.hpp"
 
+//Constructor
 BigInt::BigInt(std::string StrInt){
 
     int size = StrInt.length();
 
     base = BigInt::bdefault;
-    skip = 0;
     isPositive = (StrInt[0] != '-');
     
     while (true){
@@ -28,10 +28,10 @@ BigInt::BigInt(std::string StrInt){
 }
 
 BigInt::BigInt(){
-        skip = 0;
         isPositive = true;
         base = BigInt::bdefault;
 }
+//Addition
 BigInt BigInt::operator+ (long long const &b) const{
         
         BigInt c = *this;
@@ -41,10 +41,10 @@ BigInt BigInt::operator+ (long long const &b) const{
 
 BigInt &BigInt::operator+= (long long b){
 
-    std::vector<int>::iterator iter = numbs.begin();
+    std::vector<int>::iterator iter = this->numbs.begin();
     
    do{
-       if(iter != numbs.end()){
+       if(iter != this->numbs.end()){
             *iter += b % base;
             b /= base;
             b += *iter / base;
@@ -61,41 +61,7 @@ BigInt &BigInt::operator+= (long long b){
     return *this;        
    } 
 
-std::ostream &operator <<(std::ostream &o, BigInt const &n){
-    if (!n.numbs.size()) return o << 0;
-    int i = n.numbs.size() - 1;
-    for (; i>=0 && n.numbs[i] == 0; --i);
-
-    if (i == -1) return o << 0;
-    if (!n.isPositive) o << '-';
-
-    std::vector<int>::const_reverse_iterator it = n.numbs.rbegin() + (n.numbs.size() - i - 1);
-
-    o << *it++;
-    for (; it != n.numbs.rend(); ++it) {
-        for (int i(0), len = n.seg_leg(*it); i < 9 - len; ++i) o << '0';
-        if (*it) o << *it;
-    }
-    return o;
-
-}
-std::istream &operator >>(std::istream &in, BigInt &nm){
-    std::string str;
-    in >> str;
-    nm = str;
-    return in;
-}
-BigInt BigInt::operator= (const long long &a){
-    
-    numbs.clear();
-    long long ll = a;
-    do{
-        numbs.push_back(int (ll % base));
-        ll /= base;
-    }while (ll != 0);
-
-    return *this;
-}
+//Subtraction
 BigInt BigInt::operator- (BigInt const &nm) const{
 
     BigInt x = *this;
@@ -127,13 +93,8 @@ BigInt &BigInt::operator-= (BigInt const &nm){
     return *this;
         
 }
-uint8_t BigInt::seg_leg(int a) const{
-    uint8_t len = 0;
-    while(a)
-        a /= 10, len++;
-    return len;
-}
 
+//Multiply
 BigInt BigInt::operator*(BigInt const &n) {
     
     std::vector<int>::iterator iter1 = this->numbs.begin();
@@ -171,6 +132,8 @@ BigInt &BigInt::operator*= (BigInt const &b){
 
     return *this;
 } 
+
+//Power
 BigInt &BigInt::pow (int const &n){
     std::map<int ,BigInt> lkp;
     if(!(n&1) && !isPositive) isPositive = true;
@@ -190,11 +153,57 @@ BigInt BigInt::pow (int const &pwr ,std::map<int, BigInt> &lkp){
 
     return lkp[pwr];
 }
+// Input And Outpus
+std::ostream &operator <<(std::ostream &o, BigInt const &n){
+    if (!n.numbs.size()) return o << 0;
+    int i = n.numbs.size() - 1;
+    for (; i>=0 && n.numbs[i] == 0; --i);
+
+    if (i == -1) return o << 0;
+    if (!n.isPositive) o << '-';
+
+    std::vector<int>::const_reverse_iterator it = n.numbs.rbegin() + (n.numbs.size() - i - 1);
+
+    o << *it++;
+    for (; it != n.numbs.rend(); ++it) {
+        for (int i(0), len = n.seg_leg(*it); i < 9 - len; ++i) o << '0';
+        if (*it) o << *it;
+    }
+    return o;
+
+}
+std::istream &operator >>(std::istream &in, BigInt &nm){
+    std::string str;
+    in >> str;
+    nm = str;
+    return in;
+}
+//Initialize
+BigInt BigInt::operator= (const long long &a){
+    
+    numbs.clear();
+    long long ll = a;
+    do{
+        numbs.push_back(int (ll % base));
+        ll /= base;
+    }while (ll != 0);
+    for(auto x : numbs)
+        std::cout << x << '\n';
+
+    return *this;
+}
+uint8_t BigInt::seg_leg(int a) const{
+    uint8_t len = 0;
+    while(a)
+        a /= 10, len++;
+    return len;
+}
+
 
 
 int main(){
     BigInt b,a;
-
+    a = 123456789012;
     return EXIT_SUCCESS;
 
 }
