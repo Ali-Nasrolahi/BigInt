@@ -54,7 +54,7 @@ If we want to pass string to the constructor we should parse the string to numer
 In here we try to iterator over each character, first check if input format is correct then by each jump our prefix multiply by 10 (decimal value place) and sum up with previous result;
 i.e. 11111 parsed into 1, 10, 100, 1000, 10000 respectively.
 # Operators
-Well let's move on operators this part is little bit tricky. :)
+Well let's move on operators; this part is little bit tricky. :)
 ## Addition
 There's 2 main operator initialization, You intend to sum up two BigInt type or one BigInt object while the other one is just a number in range of long long type.
 And of course 
