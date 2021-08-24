@@ -62,7 +62,7 @@ And of course
     // 2 Obj
     BigInt operator+  (BigInt const &) const;
     BigInt &operator+= (BigInt const);
-    // Long Long + obj
+    // Long Long Type + obj
     BigInt operator+  (long long const &) const;
     BigInt &operator+= (long long);
 ```

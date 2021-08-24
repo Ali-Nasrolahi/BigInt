@@ -18,7 +18,7 @@ public:
 
     //Adding
     BigInt operator+  (BigInt const &) const;
-    BigInt &operator+= (BigInt const);
+    BigInt &operator+= (BigInt const &);
     BigInt operator+  (long long const &) const;
     BigInt &operator+= (long long);
 

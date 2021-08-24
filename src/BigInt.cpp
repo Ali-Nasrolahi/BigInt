@@ -60,7 +60,35 @@ BigInt &BigInt::operator+= (long long b){
 
     return *this;        
    } 
+BigInt BigInt::operator+(BigInt const &b) const{
+    
+    BigInt c  = *this;
+    c += b;
+    return c;
+}
+BigInt &BigInt::operator+=(BigInt const &b){
+    if(b.isPositive){return *this -= b;}
 
+    std::vector<int>::iterator it1 = this->numbs.begin();
+    std::vector<int>::const_iterator it2 = b.numbs.begin();
+
+    int sum = 0;
+    while(it1 != numbs.end() || it2 != b.numbs.end()){
+        if(it1 != numbs.end())
+            sum += *it1;
+        else
+            numbs.push_back(0), it1 = numbs.end() - 1;
+        
+        if(it2 != b.numbs.end())
+            sum += *it2, ++it2;
+
+        *it1 = sum % base; ++it1;
+        sum /= base;
+    }
+    if(sum) numbs.push_back(1);
+
+    return *this;
+}
 //Subtraction
 BigInt BigInt::operator- (BigInt const &nm) const{
 
@@ -187,8 +215,6 @@ BigInt BigInt::operator= (const long long &a){
         numbs.push_back(int (ll % base));
         ll /= base;
     }while (ll != 0);
-    for(auto x : numbs)
-        std::cout << x << '\n';
 
     return *this;
 }
@@ -204,6 +230,8 @@ uint8_t BigInt::seg_leg(int a) const{
 int main(){
     BigInt b,a;
     a = 123456789012;
+    b = 123455888880;
+    std::cout << (a + b) << std::endl;
     return EXIT_SUCCESS;
 
 }
