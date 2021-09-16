@@ -1,13 +1,15 @@
-CC=clang++
-CXXFLAGS=-Wall -O2
+CXX = clang++
+CXXFLAGS = -Wall -O2
+OBJ = BigInt.o
+DEPS = BigInt.hpp
 
 all: BigInt
 
-BigInt: BigInt.o 
-	$(CC) $(CXXFLAGS) -o $@ $^
+BigInt: $(OBJ)
+	$(CXX) $(CXXFLAGS) -o $@ $^
 
-%.o: %.hpp %.cpp 
-	$(CC) $(CXXFLAGS) -c $^
+%.o: %.cpp $(DEPS) 
+	$(CXX) $(CXXFLAGS) -c -o $@ $^
 
 clean:
 	$(RM) *.o BigInt 
